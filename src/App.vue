@@ -5,16 +5,16 @@ import CoinSelect from './components/CoinSelect.vue'
 import axios from 'axios'
 
 interface URL {
-  [key: string]: string;
+  [url_name: string]: string;
 }
 
 interface CoinValue {
-  [key: string]: number | null;
+  [coin_name: string]: number | null;
 }
 
 const url: URL = {
   exchange: 'https://openexchangerates.org/api/latest.json?app_id=ae86587758744760bca3f3f4107b2369&show_alternative=1&symbols=COP,EUR,VEF_BLKMKT,PEN,CLP',
-  crypto: 'https://min-api.cryptocompare.com/data/pricemulti?fsyms=BTC,ETH,ADA,LTC&tsyms=USD,EUR,COP,VES,CLP,PEN&api_key={4a8910b13d689849c08919735481e44ff67190790f102938ee30e1a95169ae70}',
+  crypto: 'https://min-api.cryptocompare.com/data/pricemulti?fsyms=BTC,ETH,LTC&tsyms=USD,EUR,COP,VES,CLP,PEN&api_key={4a8910b13d689849c08919735481e44ff67190790f102938ee30e1a95169ae70}',
 }
 
 let coinValue: CoinValue = {
@@ -29,8 +29,7 @@ let coinValue: CoinValue = {
   usd_eth: null,
   eur_btc: null,
   eur_eth: null,
-  eur_ltc: null,
-  usd_ada: null
+  eur_ltc: null
 }
 
 let isError = ref<boolean>(false)
@@ -61,7 +60,6 @@ onMounted(() => {
       coinValue.eur_ltc = cryptoGet.data.LTC.EUR
       coinValue.usd_ltc = cryptoGet.data.LTC.USD
       coinValue.usd_eth = cryptoGet.data.ETH.USD
-      coinValue.usd_ada = cryptoGet.data.ADA.USD
     }))
     .catch(error => {
       console.log(error)
@@ -71,6 +69,42 @@ onMounted(() => {
       isLoading.value = false
     })
 })
+
+function coinFormat([lang, currency, digits, value]: [string, string, number, number]) {
+  if (isNaN(value)) {
+    switch (currency) {
+      case 'VES':
+        return 'Bs.S 0,00';
+        break;
+      case 'COP':
+        return '$ 0,00';
+        break;
+      case 'USD':
+        return '$0.00';
+        break;
+      case 'PEN':
+        return 'S/ 0.00';
+        break;
+      case 'CLP':
+        return '$ 0.00';
+        break;
+      case 'BTC':
+        return 'BTC 0.00000000';
+        break;
+      case 'LTC':
+        return 'LTC 0.00000000';
+        break;
+      case 'ETH':
+        return 'ETH 0.00000000';
+        break;
+      case 'EUR':
+        return '€ 0,00';
+        break;
+    }
+  } else {
+    return Intl.NumberFormat(lang, { style: 'currency', currency: currency, minimumFractionDigits: digits }).format(value);
+  }
+}
 </script>
 
 <template>
@@ -85,32 +119,31 @@ onMounted(() => {
     <p class="text-center font-semibold text-4xl uppercase text-gradient">CARGANDO</p>
   </div>
 
-  <main v-else class="relative grid mx-auto mt-1 w-10/12 font-poppins">
-    <div
-      class="relative flex items-center justify-center gap-2 bg-royal rounded-lg px-4 py-2 w-full h-20 overflow-hidden">
+  <main v-else class="relative grid mx-auto mt-1 w-10/12 font-poppins select-none">
+    <div class="relative flex items-center justify-center gap-2 bg-royal rounded-lg w-full h-20 overflow-hidden">
       <p class="text-center text-white font-semibold text-4xl uppercase">Conversor de divisas y criptos</p>
       <span
         :class="[{ 'invisible': isActive != false }, 'bg-white', 'text-royal', 'font-semibold', 'rounded-full', 'text-2xl', 'px-3.5', 'py-1', 'hover:bg-gray-200', 'cursor-pointer', 'transition', 'duration-200']"
         @click="showNotes">?</span>
       <div
-        :class="[{ 'notes-hidden': isActive != true, 'notes-open': isActive != false }, 'absolute', 'flex', 'flex-col', 'items-center', 'w-full', 'overflow-hidden', 'bg-royal']">
-        <p class="text-center text-white font-semibold text-2xl">El valor de las divisas es proporcionado por
+        :class="[{ 'notes-hidden': isActive != true, 'notes-open': isActive != false }, 'absolute', 'flex', 'flex-col', 'items-center', ' justify-center', 'w-full', , 'h-full', 'overflow-hidden', 'bg-white', 'border-4', 'rounded-lg', 'border-royal']">
+        <p class="text-center text-royal font-semibold text-2xl">El valor de las divisas es proporcionado por
           <a class="text-gray-300 hover:text-gray-400 transition duration-200" target="_blank"
             href="https://openexchangerates.org/" rel="noreferrer">openexchangerates.org</a>.
         </p>
-        <p class="text-center text-white font-semibold text-2xl">El valor de las criptomonedas es proporcionado por
+        <p class="text-center text-royal font-semibold text-2xl">El valor de las criptomonedas es proporcionado por
           <a class="text-gray-300 hover:text-gray-400 transition duration-200" target="_blank"
             href="https://cryptocompare.com/" rel="noreferrer">cryptocompare.com</a>.
         </p>
       </div>
     </div>
-    <Coin :coinVal="coinValue" />
-    <CoinSelect :coinVal="coinValue" />
+    <Coin :coinVal="coinValue" :coinFormat="coinFormat" />
+    <CoinSelect :coinVal="coinValue" :coinFormat="coinFormat" />
     <div
       class="relative flex items-center justify-center gap-2 bg-royal rounded-lg px-4 py-2 w-full h-20 overflow-hidden mt-1">
       <p class="text-white text-xl">WebApp creada por:</p>
-      <a class="m-2 w-16 h-16 rounded-lg hover:bg-gray-300 hover:bg-opacity-80 transition duration-300"
-        href="https://njrzr.github.io" target="_blank" rel="noreferrer"><img id="logos" src="images/logo.png"
+      <a class="bg-white m-2 w-16 h-16 rounded-lg hover:bg-gray-300 hover:bg-opacity-80 transition duration-300"
+        href="https://njrzr.github.io" target="_blank" rel="noreferrer"><img id="logos" src="./assets/logo.svg"
           title="ZERO+PLUS" alt="Logo de creador" /></a>
       <p class="text-white text-xl">&copy; ZERO+PLUS 2019 - {{ date }}</p>
     </div>

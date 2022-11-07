@@ -11,6 +11,9 @@ module.exports = {
       },
       'colors': {
         'royal': '#4169e1'
+      },
+      'backgroundImage': {
+        'arrow': "url('/src/assets/arrow.png')"
       }
     },
   },
