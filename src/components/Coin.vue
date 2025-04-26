@@ -41,8 +41,6 @@ const format: Format = {
   vesToClp: 'Bolivares por mil Pesos Chilenos',
   copToVes: 'Pesos por Bolivar'
 }
-
-console.log(props)
 </script>
 
 <template>
