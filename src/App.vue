@@ -118,44 +118,49 @@ function coinFormat([lang, currency, digits, value]: [string, string, number, nu
 
 <template>
   <div v-if="isError"
-    class="relative mx-auto mt-1 w-10/12 h-20 font-poppins flex items-center justify-center bg-royal rounded-lg px-4 py-2">
-    <p class="text-center text-white font-semibold text-xl">No fue posible obtener el valor de las monedas,
-      revise su conexión a internet o inténtalo mas tarde.</p>
+    class="relative w-screen h-screen font-instrument flex justify-center items-center bg-royal">
+    <p class=" w-8/12 text-center text-white font-semibold text-4xl">
+      No fue posible obtener el valor de las monedas,
+      revise su conexión a internet o inténtalo mas tarde.
+    </p>
   </div>
 
-  <div v-else-if="isLoading"
-    class="relative mx-auto mt-1 w-10/12 h-20 font-poppins flex items-center justify-center bg-royal rounded-lg px-4 py-2">
-    <p class="text-center font-semibold text-4xl uppercase text-gradient">CARGANDO</p>
+  <div v-else="isLoading"
+    class="relative w-screen h-screen font-instrument flex justify-center items-center bg-royal">
+    <p class="text-center font-semibold text-4xl uppercase text-color-change">CARGANDO</p>
   </div>
 
-  <main v-else class="relative flex gap-1 p-1 w-full h-screen font-poppins overflow-hidden">
+  <main v-else class="relative flex gap-1 p-1 w-full h-screen font-instrument overflow-hidden">
     <Coin :coinVal="coinValue" :coinFormat="coinFormat" @showPrices="showPrices" :isPrices="isPrices" />
 
     <div class="relative bg-royal flex flex-col justify-start tems-center gap-2 p-1 w-full md:w-10/12 h-full rounded-lg overflow-hidden">
-      <p class="relative w-full h-24 bg-white flex justify-center items-center rounded-lg text-gray-500 font-semibold text-xl md:text-4xl uppercase">Conversor de divisas y criptos</p>
+      <div class="relative w-full h-24 bg-white flex justify-center items-center rounded-lg text-gray-500 font-semibold text-xl md:text-4xl uppercase">
+        <p>Conversor de divisas y criptos</p>
+        
+        <div
+          :class="[{ 'notes-hidden': isActive != true, 'notes-open': isActive != false }, 'absolute left-0 top-0 flex flex-col items-center justify-center w-full h-auto md:h-full overflow-hidden bg-gray-800 rounded-lg']">
+          <p class="text-center text-royal font-semibold text-lg md:text-2xl">El valor de las divisas es proporcionado por
+            <a class="text-gray-300 hover:text-gray-400 transition duration-200" target="_blank"
+              href="https://openexchangerates.org/" rel="noreferrer">openexchangerates.org</a>.
+          </p>
+          <p class="text-center text-royal font-semibold text-lg md:text-2xl">El valor de las criptomonedas es proporcionado por
+            <a class="text-gray-300 hover:text-gray-400 transition duration-200" target="_blank"
+              href="https://cryptocompare.com/" rel="noreferrer">cryptocompare.com</a>.
+          </p>
+        </div>
+      </div>
+
       <span
         :class="[{ 'invisible': isPrices != false }, 'absolute left-2 top-2 flex md:hidden justify-center items-center bg-royal w-8 md:w-10 h-8 md:h-10 text-white font-semibold rounded-lg text-2xl hover:bg-gray-400 cursor-pointer transition duration-200']"
         @click="showPrices">
-        $
+        <i class="text-lg fa-solid fa-coins"></i>
       </span>
 
       <span
         :class="[{ 'invisible': isActive != false }, 'absolute right-2 top-2 flex justify-center items-center bg-royal w-8 md:w-10 h-8 md:h-10 text-white font-semibold rounded-lg text-2xl hover:bg-gray-400 cursor-pointer transition duration-200']"
         @click="showNotes">
-        ?
+        <i class="text-lg fa-solid fa-question"></i>
       </span>
-      
-      <div
-        :class="[{ 'notes-hidden': isActive != true, 'notes-open': isActive != false }, 'absolute left-0 top-0 flex flex-col items-center justify-center w-full h-36 md:h-24 overflow-hidden bg-gray-800 rounded-lg']">
-        <p class="text-center text-royal font-semibold md:text-2xl">El valor de las divisas es proporcionado por
-          <a class="text-gray-300 hover:text-gray-400 transition duration-200" target="_blank"
-            href="https://openexchangerates.org/" rel="noreferrer">openexchangerates.org</a>.
-        </p>
-        <p class="text-center text-royal font-semibold md:text-2xl">El valor de las criptomonedas es proporcionado por
-          <a class="text-gray-300 hover:text-gray-400 transition duration-200" target="_blank"
-            href="https://cryptocompare.com/" rel="noreferrer">cryptocompare.com</a>.
-        </p>
-      </div>
       
       <CoinSelect :coinVal="coinValue" :coinFormat="coinFormat" />
     </div>
@@ -186,7 +191,7 @@ function coinFormat([lang, currency, digits, value]: [string, string, number, nu
   }
 }
 
-.text-gradient {
+.text-color-change {
   animation: loading infinite 1s;
 }
 

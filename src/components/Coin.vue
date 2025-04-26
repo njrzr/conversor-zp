@@ -46,9 +46,9 @@ const format: Format = {
 <template>
   <div v-show="isPrices" :class="['absolute bg-royal flex flex-col gap-1 w-full h-full p-1 overflow-y-scroll left-0 top-0 z-10']">
     <span
-      :class="['absolute left-2 top-2 flex justify-center items-center bg-royal w-8 h-8 text-white font-semibold rounded-lg text-xl hover:bg-gray-400 cursor-pointer transition duration-200 z-10']"
+      :class="['absolute right-3 top-3 flex justify-center items-center bg-royal w-8 h-8 text-white font-semibold rounded-lg text-xl hover:bg-gray-400 cursor-pointer transition duration-200 z-10']"
       @click="emits('showPrices')">
-      x
+      <i class="text-lg fa-solid fa-times"></i>
     </span>
 
     <p class="relative bg-white w-full h-auto p-2 text-center text-gray-500 text-2xl font-bold rounded-lg">

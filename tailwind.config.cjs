@@ -7,7 +7,7 @@ module.exports = {
   theme: {
     extend: {
       'fontFamily': {
-        'poppins': 'Poppins'
+        'instrument': 'Instrument Sans'
       },
       'colors': {
         'royal': '#4169e1'
