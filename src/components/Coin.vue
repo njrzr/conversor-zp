@@ -41,10 +41,12 @@ const format: Format = {
   vesToClp: 'Bolivares por mil Pesos Chilenos',
   copToVes: 'Pesos por Bolivar'
 }
+
+console.log(props)
 </script>
 
 <template>
-  <div v-show="isPrices" :class="['absolute bg-royal flex flex-col gap-1 w-full h-full p-1 overflow-y-scroll left-0 top-0 z-10']">
+  <!-- <div :class="['absolute bg-royal flex flex-col gap-1 w-full h-full p-1 overflow-y-scroll left-0 top-0 z-10']">
     <span
       :class="['absolute right-3 top-3 flex justify-center items-center bg-royal w-8 h-8 text-white font-semibold rounded-lg text-xl hover:bg-gray-400 cursor-pointer transition duration-200 z-10']"
       @click="emits('showPrices')">
@@ -60,7 +62,7 @@ const format: Format = {
         {{ format[index] }} <span class="font-bold">{{ coinFormat(coin) }}</span>
       </p>
     </div>
-  </div>
+  </div> -->
 
   <div :class="['relative bg-royal hidden md:flex flex-col gap-1 w-3/12 h-auto p-1 rounded-lg overflow-y-scroll']">
     <p class="relative bg-white w-full h-auto p-2 text-center text-gray-500 text-2xl font-bold rounded-lg">

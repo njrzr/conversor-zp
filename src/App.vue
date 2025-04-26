@@ -125,7 +125,7 @@ function coinFormat([lang, currency, digits, value]: [string, string, number, nu
     </p>
   </div>
 
-  <div v-else="isLoading"
+  <div v-else-if="isLoading"
     class="relative w-screen h-screen font-instrument flex justify-center items-center bg-royal">
     <p class="text-center font-semibold text-4xl uppercase text-color-change">CARGANDO</p>
   </div>
