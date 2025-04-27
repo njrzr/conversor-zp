@@ -82,8 +82,8 @@ onMounted(() => {
 function coinFormat([lang, currency, digits, value]: [string, string, number, number]) {
   if (isNaN(value)) {
     switch (currency) {
-      case 'VES':
-        return 'Bs. 0,00';
+      case 'VED':
+        return 'Bs.D 0,00';
         break;
       case 'COP':
         return '$ 0,00';
@@ -166,12 +166,21 @@ function coinFormat([lang, currency, digits, value]: [string, string, number, nu
     </div>
     
     <div
-      class="fixed border-l-2 border-t-2 border-royal bottom-0 right-0 hidden md:flex flex-col gap-2 items-center justify-center bg-white rounded-tl-lg p-1 w-32 h-auto overflow-hidden">
-      <p class="relative text-lg">Hecho por</p>
-      <a class="border border-black bg-gray-500 bg-opacity-0 w-12 h-12 rounded-lg hover:bg-opacity-75 transition duration-200"
-        href="https://njrzr.github.io" target="_blank" rel="noreferrer"><img id="logos" class="w-full h-full" src="./assets/logo.svg"
-          title="ZERO+PLUS" alt="Logo de creador" /></a>
-      <p class="text-base">&copy; 2019 - {{ date }}</p>
+      class="fixed border-l-4 border-t-4 border-white bg-royal bottom-0 right-0 flex flex-col md:gap-2 items-center justify-center rounded-tl-lg p-1 w-32 h-auto overflow-hidden">
+      <p class="relative w-full text-center text-lg text-white hidden md:block">Hecho por</p>
+      
+      <a class="relative w-16 h-16 rounded-lg hidden md:block group overflow-hidden"
+        href="https://njrzr.github.io" target="_blank" rel="noreferrer">
+        <img id="logos" class="w-full h-full bg-white group-hover:bg-opacity-50 transition-all duration-200" src="./assets/logo.svg"
+          title="ZERO+PLUS" alt="Logo de creador" />
+      </a>
+
+      <a class="relative w-full text-center text-white rounded-lg border-2 border-gray-500 md:hidden block"
+        href="https://njrzr.github.io" target="_blank" rel="noreferrer">
+        ZERO+PLUS
+      </a>
+      
+      <p class="w-full text-white text-center text-base">&copy; 2019 - {{ date }}</p>
     </div>
   </main>
 </template>

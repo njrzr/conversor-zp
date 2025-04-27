@@ -17,34 +17,34 @@ const coins: Coins = {
   vesBMToUsd: ['es-VE', 'VED', 2, props.coinVal["ves_usd_bm"]],
   vesBCVToEur: ['es-VE', 'VED', 2, (props.coinVal["ves_usd_bcv"] / props.coinVal["ves_eur"])],
   vesBMToEur: ['es-VE', 'VED', 2, (props.coinVal["ves_usd_bm"] / props.coinVal["ves_eur"])],
+  copToUsd: ['es-CO', 'COP', 2, props.coinVal["era_cop"]],
+  copToVes: ['es-CO', 'COP', 2, (props.coinVal["era_cop"] / props.coinVal["ves_usd_bm"])],
+  vesToPen: ['es-VE', 'VED', 2, (props.coinVal["ves_usd_bm"] / props.coinVal["era_pen"])],
+  vesToCop: ['es-VE', 'VED', 2, (props.coinVal["ves_usd_bm"] / props.coinVal["era_cop"]) * multiply],
+  vesToClp: ['es-VE', 'VED', 2, (props.coinVal["ves_usd_bm"] / props.coinVal["era_clp"]) * multiply],
   usdToBtc: ['en-US', 'USD', 2, props.coinVal["usd_btc"]],
   usdToEth: ['en-US', 'USD', 2, props.coinVal["usd_eth"]],
-  usdToLtc: ['en-US', 'USD', 2, props.coinVal["usd_ltc"]],
-  copToUsd: ['es-CO', 'COP', 2, props.coinVal["era_cop"]],
-  vesToCop: ['es-VE', 'VED', 2, (props.coinVal["ves_usd_bm"] / props.coinVal["era_cop"]) * multiply],
-  vesToPen: ['es-VE', 'VED', 2, (props.coinVal["ves_usd_bm"] / props.coinVal["era_pen"])],
-  copToVes: ['es-CO', 'COP', 2, (props.coinVal["era_cop"] / props.coinVal["ves_usd_bm"])],
-  vesToClp: ['es-VE', 'VED', 2, (props.coinVal["ves_usd_bm"] / props.coinVal["era_clp"]) * multiply]
+  usdToLtc: ['en-US', 'USD', 2, props.coinVal["usd_ltc"]]
 }
 
 const format: Format = {
-  vesBCVToUsd: 'Bolivares por Dolar BCV',
-  vesBMToUsd: 'Bolivares por Dolar Paralelo',
-  vesBCVToEur: 'Bolivares por Euro BCV',
-  vesBMToEur: 'Bolivares por Euro Paralelo',
-  usdToBtc: 'Dolares por Bitcoin',
-  usdToEth: 'Dolares por Ether',
-  usdToLtc: 'Dolares por Litecoin',
-  copToUsd: 'Pesos por Dolar',
-  vesToCop: 'Bolivares por mil Pesos',
-  vesToPen: 'Bolivares por Sol',
-  vesToClp: 'Bolivares por mil Pesos Chilenos',
-  copToVes: 'Pesos por Bolivar'
+  vesBCVToUsd: 'Dolar BCV',
+  vesBMToUsd: 'Dolar Paralelo',
+  vesBCVToEur: 'Euro BCV',
+  vesBMToEur: 'Euro Paralelo',
+  copToUsd: 'Dolar (Colombia)',
+  copToVes: 'Bolivar (Colombia)',
+  vesToPen: 'Sol',
+  vesToCop: 'Peso Colombiano (x 1000)',
+  vesToClp: 'Peso Chileno (x 1000)',
+  usdToBtc: 'Bitcoin',
+  usdToEth: 'Ether',
+  usdToLtc: 'Litecoin'
 }
 </script>
 
 <template>
-  <div v-show="isPrices" :class="['absolute bg-royal flex flex-col gap-1 w-full h-full p-1 overflow-y-scroll left-0 top-0 z-10']">
+  <div v-show="isPrices" :class="['absolute bg-royal flex flex-col gap-1 w-full h-full p-1 overflow-y-scroll left-0 top-0 z-10 scrollbar-none']">
     <span
       :class="['absolute right-3 top-3 flex justify-center items-center bg-royal w-8 h-8 text-white font-semibold rounded-lg text-xl hover:bg-gray-400 cursor-pointer transition duration-200 z-10']"
       @click="emits('showPrices')">
@@ -62,7 +62,7 @@ const format: Format = {
     </div>
   </div>
 
-  <div :class="['relative bg-royal hidden md:flex flex-col gap-1 w-3/12 h-auto p-1 rounded-lg overflow-y-scroll']">
+  <div :class="['relative bg-royal hidden md:flex flex-col gap-1 w-3/12 h-auto p-1 rounded-lg overflow-y-scroll scrollbar-none']">
     <p class="relative bg-white w-full h-auto p-2 text-center text-gray-500 text-2xl font-bold rounded-lg">
         Precios del dia
     </p>
@@ -94,5 +94,9 @@ const format: Format = {
   position: absolute;
   transition: 500ms;
   opacity: 1;
+}
+
+.scrollbar-none {
+  scrollbar-width: none;
 }
 </style>
